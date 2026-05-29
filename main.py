@@ -155,15 +155,34 @@ def generate_study():
 def send_telegram(message):
     telegram_url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
 
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown",
-        "disable_web_page_preview": True,
-    }
+    # Telegram aceita até 4096 caracteres por mensagem após o parsing.
+    # Vamos enviar em blocos menores para evitar erro.
+    max_chunk_size = 3900
 
-    response = requests.post(telegram_url, data=payload, timeout=30)
-    response.raise_for_status()
+    chunks = []
+    text = message.strip()
+
+    while text:
+        if len(text) <= max_chunk_size:
+            chunks.append(text)
+            break
+
+        split_at = text.rfind("\n", 0, max_chunk_size)
+        if split_at == -1:
+            split_at = max_chunk_size
+
+        chunks.append(text[:split_at].strip())
+        text = text[split_at:].strip()
+
+    for chunk in chunks:
+        payload = {
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": chunk,
+            "disable_web_page_preview": True,
+        }
+
+        response = requests.post(telegram_url, data=payload, timeout=30)
+        response.raise_for_status()
 
 def send_email(subject, body):
     if not EMAIL_USER or not EMAIL_APP_PASSWORD or not EMAIL_TO:
@@ -187,12 +206,12 @@ try:
     study, model_used = generate_study()
 
     telegram_message = f"""
-📖 *Estudo Bíblico Diário*
+Estudo Bíblico Diário
 
-📅 Data: {date_str}
-🗓 Dia: {weekday_pt}
-🎯 Tema: {theme["title"]}
-🤖 Modelo: {model_used}
+Data: {date_str}
+Dia: {weekday_pt}
+Tema: {theme["title"]}
+Modelo: {model_used}
 
 {study}
 """
