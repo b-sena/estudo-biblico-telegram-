@@ -1,15 +1,19 @@
 import os
 import requests
-
 from google import genai
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-client = genai.Client(
-    api_key=GEMINI_API_KEY
-)
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API_KEY não definida")
+if not TELEGRAM_TOKEN:
+    raise ValueError("TELEGRAM_TOKEN não definido")
+if not TELEGRAM_CHAT_ID:
+    raise ValueError("TELEGRAM_CHAT_ID não definido")
+
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 PROMPT = """
 Você é um pastor e teólogo evangélico.
