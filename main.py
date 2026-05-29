@@ -216,8 +216,12 @@ Modelo: {model_used}
 {study}
 """
 
-    email_subject = f"Estudo Bíblico Diário - {date_str}"
-    email_body = f"""Estudo Bíblico Diário
+    email_subject = (
+        f"📖 Estudo Bíblico Diário - "
+        f"{theme['title']} ({date_str})"
+    )
+    email_body = f"""
+    📖 Estudo Bíblico Diário
 
 Data: {date_str}
 Dia: {weekday_pt}
