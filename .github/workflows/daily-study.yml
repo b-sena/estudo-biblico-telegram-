@@ -1,32 +1,35 @@
-name: Daily Bible Study
+name: 📖 Estudo Bíblico Diário
 
 on:
   schedule:
-    - cron: "0 9 * * *"
+    # Todo dia às 07:00 (horário de Brasília = 10:00 UTC)
+    - cron: "0 10 * * *"
   workflow_dispatch:
 
 jobs:
-  send-study:
+  enviar-estudo:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v6
+      - name: Instalar Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install dependencies
-        run: pip install google-genai requests
+      - name: Instalar dependências
+        run: pip install requests google-genai
 
-      - name: Run script
+      - name: Gerar e enviar estudo bíblico
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
-          EMAIL_TO: ${{ secrets.EMAIL_TO }}
-
+          GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+          WPPCONNECT_URL:     ${{ secrets.WPPCONNECT_URL }}
+          WPPCONNECT_TOKEN:   ${{ secrets.WPPCONNECT_TOKEN }}
+          WPPCONNECT_SESSION: ${{ secrets.WPPCONNECT_SESSION }}
+          WPPCONNECT_PHONE_1: ${{ secrets.WPPCONNECT_PHONE_1 }}
+          WPPCONNECT_PHONE_2: ${{ secrets.WPPCONNECT_PHONE_2 }}
+          # Para ativar o grupo, remova o comentário abaixo:
+          # WPPCONNECT_GROUP: ${{ secrets.WPPCONNECT_GROUP }}
         run: python main.py
