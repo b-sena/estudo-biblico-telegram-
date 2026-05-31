@@ -70,9 +70,6 @@ Gere um estudo bíblico diário formatado EXATAMENTE assim para WhatsApp:
 *💭 Para Meditar*
 _[Uma pergunta para reflexão pessoal]_
 
-*🙌 Oração*
-_[Oração curta e sincera baseada no texto, 3-4 linhas]_
-
 ━━━━━━━━━━━━━━━━━
 _Que a Palavra de Deus ilumine o seu dia!_ ☀️
 
@@ -145,6 +142,7 @@ def main():
         study, model_used = generate_study()
 
         header = (
+            f"🏄 *Bola de Neve Camaquã*\n"
             f"📖 *Estudo Bíblico Diário*\n"
             f"_{weekday.capitalize()}, {date_str}_\n\n"
             f"━━━━━━━━━━━━━━━━━\n"
