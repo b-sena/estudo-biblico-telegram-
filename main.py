@@ -143,7 +143,7 @@ def main():
 
         header = (
             f"🏄 *Bola de Neve Camaquã*\n"
-            f"📖 *Estudo Bíblico Diário*\n"
+            f"📖 *Devocional Diário*\n"
             f"_{weekday.capitalize()}, {date_str}_\n\n"
             f"━━━━━━━━━━━━━━━━━\n"
             f"🏷️ *Tema:* {theme['title']}\n"
