@@ -3,7 +3,7 @@ name: 📖 Estudo Bíblico Diário
 on:
   schedule:
     # Todo dia às 07:00 (horário de Brasília = 10:00 UTC)
-    - cron: "0 10 * * *"
+    - cron: "0 7 * * *"
   workflow_dispatch:
 
 jobs:
