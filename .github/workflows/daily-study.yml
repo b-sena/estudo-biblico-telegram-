@@ -1,8 +1,8 @@
-name: 📖 Estudo Bíblico Diário
+name: 📖 Devocional Diário
 
 on:
   schedule:
-    # Todo dia às 07:00 (horário de Brasília = 10:00 UTC)
+    # Todo dia às 07:00 (horário de Brasília = UTC-3, então 10:00 UTC)
     - cron: "0 5 * * *"
   workflow_dispatch:
 
@@ -22,14 +22,14 @@ jobs:
       - name: Instalar dependências
         run: pip install requests google-genai
 
-      - name: Gerar e enviar estudo bíblico
+      - name: Gerar e enviar devocional
         env:
-          GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
-          WPPCONNECT_URL:     ${{ secrets.WPPCONNECT_URL }}
-          WPPCONNECT_TOKEN:   ${{ secrets.WPPCONNECT_TOKEN }}
-          WPPCONNECT_SESSION: ${{ secrets.WPPCONNECT_SESSION }}
-          WPPCONNECT_PHONE_1: ${{ secrets.WPPCONNECT_PHONE_1 }}
-          WPPCONNECT_PHONE_2: ${{ secrets.WPPCONNECT_PHONE_2 }}
+          GEMINI_API_KEY:      ${{ secrets.GEMINI_API_KEY }}
+          EVOLUTION_URL:       ${{ secrets.EVOLUTION_URL }}
+          EVOLUTION_APIKEY:    ${{ secrets.EVOLUTION_APIKEY }}
+          EVOLUTION_INSTANCE:  ${{ secrets.EVOLUTION_INSTANCE }}
+          EVOLUTION_PHONE_1:   ${{ secrets.EVOLUTION_PHONE_1 }}
+          EVOLUTION_PHONE_2:   ${{ secrets.EVOLUTION_PHONE_2 }}
           # Para ativar o grupo, remova o comentário abaixo:
-          # WPPCONNECT_GROUP: ${{ secrets.WPPCONNECT_GROUP }}
+          # EVOLUTION_GROUP:   ${{ secrets.EVOLUTION_GROUP }}
         run: python main.py

@@ -6,16 +6,17 @@ from datetime import datetime, timedelta, timezone
 # ============================================================
 # CONFIGURAÇÃO
 # ============================================================
-GEMINI_API_KEY     = os.getenv("GEMINI_API_KEY")
-WPPCONNECT_URL     = os.getenv("WPPCONNECT_URL")
-WPPCONNECT_TOKEN   = os.getenv("WPPCONNECT_TOKEN")
-WPPCONNECT_SESSION = os.getenv("WPPCONNECT_SESSION")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-PHONE_1 = os.getenv("WPPCONNECT_PHONE_1")   # Seu número
-PHONE_2 = os.getenv("WPPCONNECT_PHONE_2")   # Outro número
+EVOLUTION_URL      = os.getenv("EVOLUTION_URL")       # http://163.176.211.25:8080
+EVOLUTION_APIKEY   = os.getenv("EVOLUTION_APIKEY")    # birthday123bot
+EVOLUTION_INSTANCE = os.getenv("EVOLUTION_INSTANCE")  # birthday-bot
+
+PHONE_1 = os.getenv("EVOLUTION_PHONE_1")   # Seu número
+PHONE_2 = os.getenv("EVOLUTION_PHONE_2")   # Outro número
 
 # Para ativar o grupo, remova o comentário abaixo e adicione o secret no GitHub:
-# GROUP_ID = os.getenv("WPPCONNECT_GROUP")  # 120363040976590973@g.us
+# GROUP_ID = os.getenv("EVOLUTION_GROUP")  # 120363040976590973@g.us
 
 if not GEMINI_API_KEY:
     raise ValueError("GEMINI_API_KEY não definida")
@@ -115,24 +116,23 @@ def generate_study():
     raise last_error
 
 # ============================================================
-# ENVIAR PELO WPPCONNECT
+# ENVIAR PELA EVOLUTION API
 # ============================================================
-def send_whatsapp(message: str, phone: str) -> None:
-    url = f"{WPPCONNECT_URL}/api/{WPPCONNECT_SESSION}/send-message"
+def send_whatsapp(message: str, number: str) -> None:
+    url = f"{EVOLUTION_URL}/message/sendText/{EVOLUTION_INSTANCE}"
     headers = {
-        "Content-Type":  "application/json",
-        "Authorization": f"Bearer {WPPCONNECT_TOKEN}",
+        "Content-Type": "application/json",
+        "apikey": EVOLUTION_APIKEY,
     }
     payload = {
-        "phone":   phone,
-        "isGroup": "@g.us" in phone,
-        "message": message,
+        "number": number,
+        "textMessage": {"text": message},
     }
     try:
-        resp = requests.post(url, json=payload, headers=headers, timeout=30)
-        print(f"Enviado para {phone}: {resp.status_code}")
+        resp = requests.post(url, json=payload, headers=headers, timeout=60)
+        print(f"Enviado para {number}: {resp.status_code}")
     except Exception as e:
-        print(f"Erro ao enviar para {phone}: {e}")
+        print(f"Erro ao enviar para {number}: {e}")
 
 # ============================================================
 # MAIN
@@ -161,7 +161,7 @@ def main():
         print(f"Estudo enviado com sucesso usando {model_used}")
 
     except Exception as e:
-        error_msg = f"❌ Falha ao gerar o estudo bíblico.\n\nData: {date_str}\n\nErro: {str(e)}"
+        error_msg = f"❌ Falha ao gerar o devocional.\n\nData: {date_str}\n\nErro: {str(e)}"
         send_whatsapp(error_msg, PHONE_1)
         print(f"Erro: {e}")
         raise
