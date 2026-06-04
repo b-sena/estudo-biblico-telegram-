@@ -126,7 +126,7 @@ def send_whatsapp(message: str, number: str) -> None:
     }
     payload = {
         "number": number,
-        "textMessage": {"text": message},
+        "text": message,
     }
     try:
         resp = requests.post(url, json=payload, headers=headers, timeout=60)
