@@ -483,8 +483,8 @@ def generate_study():
                 timeout=60,
             )
             if not resp.ok:
-            print(f"Erro da API: {resp.status_code} — {resp.text}")
-            resp.raise_for_status()
+                print(f"Erro da API: {resp.status_code} — {resp.text}")
+                resp.raise_for_status()
             study = resp.json()["content"][0]["text"].strip()
             if not study:
                 raise ValueError("Resposta vazia")
