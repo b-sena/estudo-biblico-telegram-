@@ -30,6 +30,7 @@ jobs:
           EVOLUTION_INSTANCE:  ${{ secrets.EVOLUTION_INSTANCE }}
           EVOLUTION_PHONE_1:   ${{ secrets.EVOLUTION_PHONE_1 }}
           EVOLUTION_PHONE_2:   ${{ secrets.EVOLUTION_PHONE_2 }}
+          EVOLUTION_COMMUNITY: ${{ secrets.EVOLUTION_COMMUNITY }}
           # Para ativar o grupo, remova o comentário abaixo:
           # EVOLUTION_GROUP:   ${{ secrets.EVOLUTION_GROUP }}
         run: python main.py
