@@ -13,7 +13,7 @@ EVOLUTION_APIKEY   = os.getenv("EVOLUTION_APIKEY")
 EVOLUTION_INSTANCE = os.getenv("EVOLUTION_INSTANCE")
 
 PHONE_1  = os.getenv("EVOLUTION_PHONE_1")
-PHONE_2  = os.getenv("EVOLUTION_PHONE_2")
+# PHONE_2  = os.getenv("EVOLUTION_PHONE_2")
 COMMUNITY = os.getenv("EVOLUTION_COMMUNITY")  # Café com Palavra
 
 # Para ativar o grupo, remova o comentário abaixo e adicione o secret no GitHub:
@@ -539,8 +539,8 @@ def main():
 
         msg = header + study
 
-        send_whatsapp(msg, PHONE_1)
-        send_whatsapp(msg, PHONE_2)
+        # send_whatsapp(msg, PHONE_1)
+        # send_whatsapp(msg, PHONE_2)
         send_whatsapp(msg, COMMUNITY)
 
         # Para ativar o grupo, remova o comentário abaixo:
